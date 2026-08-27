@@ -1,6 +1,6 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-
+import pandas as pd
 
 # 임베딩 모델
 embeddings = HuggingFaceEmbeddings(
@@ -44,12 +44,12 @@ questions = [
     {
         "id": "Q02",
         "country": "미합중국",
-        "question": "미국 여행 중 렌터카에 짐이나 귀중품을 두고 내려도 괜찮아?"
+        "question": "미국 로스앤젤레스에서 렌터카로 이동할 때 어떤점을 주의해야 해?"
     },
     {
         "id": "Q03",
         "country": "미합중국",
-        "question": "미국 여행할 때 총기 범죄도 조심해야 해?"
+        "question": "미국 여행 중 경찰에게 검문을 받거나 제지를 당하면 어떻게 행동해야 해?"
     },
     {
         "id": "Q04",
@@ -74,7 +74,7 @@ questions = [
     {
         "id": "Q08",
         "country": "중국",
-        "question": "중국 여행 가는데 전반적인 치안은 어떤 편이야?"
+        "question": "중국에서 전동스쿠터를 면허 없이 타면 문제가 될 수 있어?"
     },
     {
         "id": "Q09",
@@ -153,8 +153,8 @@ questions = [
     },
     {
         "id": "Q24",
-        "country": None,
-        "question": "아프리카 국가에 여행경보 3단계가 내려져 있으면 여행을 취소해야 하는 수준이야?"
+        "country": "케냐",
+        "question": "케냐에서 강도를 만나면 어떻게 대처해?"
     },
     {
         "id": "Q25",
@@ -202,13 +202,13 @@ for item in questions:
     if country:
         results = vector_db.similarity_search(
             query,
-            k=5,
+            k=15,
             filter={"국가명": country},
         )
     else:
         results = vector_db.similarity_search(
             query,
-            k=5,
+            k=15,
         )
 
     print("검색 결과 개수:", len(results))
